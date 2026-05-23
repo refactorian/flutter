@@ -1,0 +1,68 @@
+# This file configures the analyzer, which statically analyzes Dart code to
+# check for errors, warnings, and lints.
+#
+# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
+# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
+# invoked from the command line by running `flutter analyze`.
+
+# The following line activates a set of recommended lints for Flutter apps,
+# packages, and plugins designed to encourage good coding practices.
+
+include: package:flutter_lints/flutter.yaml
+
+# Configuration for the Dart Formatter
+formatter:
+  page_width: 80 # Standard maximum line width before wrapping
+  trailing_commas: preserve # Prevents removing commas that force multi-line widgets
+
+analyzer:
+  # Strict Mode: Ensures type safety and prevents 'dynamic' leaks
+  language:
+    strict-casts: true # Disallows implicit downcasts from 'dynamic'
+    strict-inference: true # Requires explicit types when inference fails
+    strict-raw-types: true # Disallows generic types without type arguments
+
+  # Ignore files that are automatically created by code generators
+  exclude:
+    - "**/*.g.dart" # Standard Dart code generation output
+    - "**/*.freezed.dart" # Freezed package generation output
+    - "lib/generated/**" # Common directory for localization/intl files
+
+  # Severity Mapping: Define which issues stop the build or show as warnings
+  errors:
+    todo: ignore # Allows TODOs to remain in code without warnings
+    missing_required_param: error # Missing @required parameters become hard errors
+    missing_return: error # Missing return statements in functions become hard errors
+    require_trailing_commas: error # Missing commas (multi-line format) becomes a hard error
+    use_build_context_synchronously: error # Prevents dangerous async Context use
+    avoid_print: warning # Discourages use of print() in production code
+    invalid_annotation_target: ignore # Permits metadata annotations on non-standard targets
+    parameter_assignments: warning # Discourages re-assigning values to function parameters
+
+linter:
+  rules:
+    # --- Formatting & Widget Tree Readability ---
+    require_trailing_commas: true # Triggers auto-wrap for each widget property
+    sort_child_properties_last: true # Places 'child' at the end of the property list
+    prefer_single_quotes: true # Enforces use of ' instead of " for strings
+    directives_ordering: true # Automatically sorts and groups import statements
+    always_put_required_named_parameters_first: true # Keeps required params at the top of constructors
+
+    # --- Performance & Resource Management ---
+    prefer_const_constructors: true # Improves UI performance by caching widget instances
+    prefer_const_literals_to_create_immutables: true # Enforces const for lists/maps where possible
+    avoid_unnecessary_containers: true # Removes Container widgets that serve no purpose
+    prefer_final_locals: true # Ensures local variables aren't accidentally reassigned
+
+    # --- Bug Prevention & Logic ---
+    use_build_context_synchronously: true # Checks if widget is mounted before using context
+    unawaited_futures: true # Ensures async calls are awaited or explicitly handled
+    discarded_futures: true # Prevents passing futures to synchronous methods
+    avoid_print: true # Enforces use of logging frameworks or debugPrint()
+    avoid_void_async: true # Prevents 'void' return type on async functions
+    cancel_subscriptions: true # Ensures StreamSubscriptions are closed to prevent leaks
+    close_sinks: true # Ensures Sinks/Controllers are closed to prevent leaks
+
+    # --- Documentation & API Style ---
+    public_member_api_docs: false # Disables documentation requirement for every class/method
+    package_api_docs: false # Disables documentation requirement for package APIs
